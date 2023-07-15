@@ -5,4 +5,6 @@ package kz.bit.kormefinall.repositories;
   import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+  List<Product> findBycategoryId(Long categoryId);
+
 }

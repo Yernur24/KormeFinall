@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="navbar.html"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="content" class="mt-5">
+    <hr>
+    <div style="display: flex">
+        <div>
+            <img th:src="${product.image}" style=" margin-left: 100px; height: 600px;width: 600px;margin-bottom: 20px;">
+            <div style="display: flex">
+                <img th:src="${product.image}" style=" margin-left: 85px; height: 160px;width: 200px;margin-bottom: 20px;">
+                <img th:src="${product.image}" style=" margin-left: 33px; height: 160px;width: 200px;margin-bottom: 20px;">
+                <img th:src="${product.image}" style=" margin-left: 33px; height: 160px;width: 200px;margin-bottom: 20px;">
+            </div>
+
+        </div>
+        <div style="margin-left: 120px" class="container" >
+            <div class="row justify-content-center" style="width: 800px">
+                <div class="col-md-15">
+                    <div class="col-sm-15">
+                        <div class="card">
+                            <div class="card-body" style="text-align: center">
+                                <h3  th:text="${product.Name}"></h3>
+                                <hr>
+                                <h4  th:text="${product.content}"></h4>
+                                <b>Price<p th:text="${product.price}"></p></b>
+                               <b>Author:<i th:text="${product.author}"></i></b>
+                                <div style="display:flex; margin-left: 270px; margin-top: 12px">
+                                <button style="background-color: #0d0d0d; color: white;height: 60px;width: 150px" type="submit">add to cart</button>
+                                <form sec:authorize="hasAnyRole('ROLE_ARTIST', 'ROLE_ADMIN')" style="margin-left: 15px" th:action="@{'/delete-product/'+${product.id}}" method="post">
+                                    <button style="height:55px; width: 110px" class="btn btn-danger" type="submit">delete</button>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

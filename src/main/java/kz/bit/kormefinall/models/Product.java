@@ -28,7 +28,6 @@ public class Product {
     @Column(name = "content")
     private String content;
 
-    @Lob
     @Column(name = "image")
     private String image;
 
@@ -37,6 +36,14 @@ public class Product {
 
     @ManyToOne
     private Category category;
+
+
+    public String loadImage(){
+        if (image == null || image.isEmpty()) {
+            return "postsim/products/default.png";
+        }
+        return image;
+    }
 
 }
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="navbar.html">
+<div layout:fragment="content">
+    <h1 class="text-center">HELLO ADMIN PANEL</h1>
+
+    <h1 style="margin-left: 50px; margin-top: 20px"> USERS PAGE! </h1>
+<!--    <div class="input-group">-->
+<!--        <form action="{{route('adm.users.search')}}" method="GET">-->
+<!--            <div class="form-outline">-->
+<!--                <input style="margin-left: 50px" type="text" name="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />-->
+<!--            </div>-->
+<!--            <button style="margin-left: 50px; margin-bottom: 50px" type="submit" class="btn btn-primary">-->
+<!--                Search-->
+<!--            </button>-->
+<!--        </form>-->
+<!--    </div>-->
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">email</th>
+            <th scope="col">ban-unban</th>
+        </tr>
+        </thead>
+        <tbody id="userListBody">
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        loadUsers();
+        function loadUsers() {
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("GET", "/api/users", true);
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+                    let userList = JSON.parse(httpRequest.responseText);
+                    let tableContent = "";
+                    for (let i = 0; i < userList.length; i++) {
+                         let btn =
+                             userList[i].banned ? "<button class='btn btn-success btn-sm' onclick='banUser(" + userList[i].id + ", false)'>Unban</button>" :
+                                 "<button class='btn btn-danger btn-sm' onclick='banUser(" + userList[i].id + ", true)'>Ban</button>";
+                        tableContent += "<tr>";
+                        tableContent += "<td>" + userList[i].id + "</td>";
+                        tableContent += "<td>" + userList[i].title + "</td>";
+                        tableContent += "<td>" + userList[i].email + "</td>";
+                        tableContent += "<td>" + btn + "</td>";
+                        tableContent += "</tr>";
+                    }
+                    document.getElementById("userListBody").innerHTML = tableContent;
+                }
+            }
+            httpRequest.send();
+        }
+    function banUser(userId, banned) {
+        console.log(userId, banned);
+        const url = "/api/users/ban";
+        const data = {user_id: userId, banned: banned};
+        $.post(url, data, function (data) {
+            console.log(data);
+            getUsers();
+        })
+    }
+
+</script>
+</div>
+</html>

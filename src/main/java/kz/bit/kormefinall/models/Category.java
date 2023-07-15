@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "category")
@@ -18,4 +22,6 @@ public class Category {
 
     @Column(name = "name")
     private String name;
+
+
 }

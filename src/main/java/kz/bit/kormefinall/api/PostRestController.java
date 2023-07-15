@@ -38,7 +38,7 @@ public class PostRestController {
     }
 
     @DeleteMapping(value = "{id}")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void deletePosts(@PathVariable(name = "id") Long id){
         productService.deletePosts(id);
     }

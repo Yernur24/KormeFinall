@@ -24,6 +24,12 @@ public class User extends BaseModel implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "avatar" ,columnDefinition = "TEXT")
+    private String avatar;
+
+    @Column(name = "is_active", columnDefinition = "boolean default false")
+    private boolean isActive;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permission> permissions;
 
@@ -61,4 +67,12 @@ public class User extends BaseModel implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String loadUserAvatar(){  // if avatar is null or empty, return default avatar
+        if(avatar == null || avatar.isEmpty()){
+            return "/uti/default-img.jpg";
+        }
+        return avatar;
+    }
+
 }
