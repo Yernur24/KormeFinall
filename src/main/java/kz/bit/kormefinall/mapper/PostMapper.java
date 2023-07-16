@@ -11,10 +11,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PostMapper {
 
-//    @Mapping(source = "name", target = "Name")
+    @Mapping(source = "name", target = "title")
     ProductDTO toDto(Product product);
 
-//    @Mapping(source = "Name", target = "name")
+    @Mapping(source = "title", target = "name")
     Product toModel(ProductDTO productDTO);
 
     List<ProductDTO> toDtoList(List<Product> productList);

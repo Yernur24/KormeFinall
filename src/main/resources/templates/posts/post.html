@@ -26,9 +26,11 @@
                                 <b>Price<p th:text="${product.price}"></p></b>
                                <b>Author:<i th:text="${product.author}"></i></b>
                                 <div style="display:flex; margin-left: 270px; margin-top: 12px">
-                                <button style="background-color: #0d0d0d; color: white;height: 60px;width: 150px" type="submit">add to cart</button>
+                                    <button sec:authorize="hasAnyRole('ROLE_ARTIST', 'ROLE_ADMIN')"  style=" font-size: 14px; height: 50px;width: 200px; background-color: darkblue" type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#update">
+                                        Details
+                                    </button>
                                 <form sec:authorize="hasAnyRole('ROLE_ARTIST', 'ROLE_ADMIN')" style="margin-left: 15px" th:action="@{'/delete-product/'+${product.id}}" method="post">
-                                    <button style="height:55px; width: 110px" class="btn btn-danger" type="submit">delete</button>
+                                    <button style="height:45px; width: 110px" class="btn btn-danger" type="submit">delete</button>
                                 </form>
                                 </div>
                             </div>
@@ -38,6 +40,78 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" th:action="@{'/update'}"  enctype="multipart/form-data" class="d-flex  flex-column align-items-center p-2">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label> Name : </label>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-15">
+                                <input type="text" class="form-control"  name="name" th:value="${product.name}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label> Author:</label>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-15">
+                                <input name="author" type="text" class="form-control" th:value="${product.author}">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" th:value="${product.id}">
+                        <div class="row">
+                            <div class="col-12">
+                                <label> Price : </label>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <input type="text" class="form-control"  name="price" th:value="${product.price}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label> Content : </label>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-15">
+                                <textarea class="form-control"  name="content" th:value="${product.content}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group col-7 mt-3">
+                            <label>Category:</label>
+                            <select class="form-control" name="category.id">
+                                <option th:each="category : ${categories}" th:selected="${category == product.category}"
+                                        th:value="${category.id}" th:text="${category.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imgInput" class="form-label"> Image</label>
+                            <input class="form-control" type="file" id="imgInput" name="image">
+                        </div>
+                    </div>
 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
 </html>

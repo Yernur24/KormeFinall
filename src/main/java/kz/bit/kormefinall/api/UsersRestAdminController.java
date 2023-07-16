@@ -21,12 +21,18 @@ public class UsersRestAdminController {
         userService.Ban(id, banned);
         return ResponseEntity.ok("User banned");
     }
+    @PostMapping(value = "/unban")
+    public ResponseEntity<?> unbanUser(@RequestParam(name = "user_id") Long id,
+                                     @RequestParam(name = "banned") boolean unbanned) {
+        userService.unBan(id, unbanned);
+        return ResponseEntity.ok("User unbanned");
+    }
+
+
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.userListDTO());
     }
-//@GetMapping
-//public List<UserDTO> getAllUsers(){
-//    return userService.userListDTO();
-//}
+
 }

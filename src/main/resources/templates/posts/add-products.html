@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="disabledSelect" class="form-label">Category</label>
-            <select class="form-control" name="category.id" >-->
+            <select class="form-control" name="category.id" >
                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
             </select>
         </div>

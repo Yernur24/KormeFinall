@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ProductDTO {
 
     private Long id;
-    private String Name;
+    private String title;
     private String author;
     private String content;
     private String image;

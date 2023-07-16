@@ -20,10 +20,14 @@ public class AdminController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(value = "/admin-panel")
     public String adminPanel(Model model){
-        List<User> user = userService.allUsers();
-        model.addAttribute("user", user);
         return "admin/index";
     }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(value = "/categories")
+    public String ctindex(Model model){
+        return "admin/category";
+    }
+
 
 
 

@@ -46,6 +46,47 @@ public class ArtistController {
         return "redirect:/";
     }
 
+
+//    @PostMapping("/update")
+//    public String updatePost( Product product){
+//        productService.savePost(product);
+//        return "redirect:/";
+//    }
+    //@PreAuthorize("hasAnyRole('ROLE_ARTIST')")
+@PostMapping("/update")
+public String update(@RequestParam(name = "name") String name,
+                          @RequestParam(name = "author") String author,
+                          @RequestParam(name = "id")Long id,
+                          @RequestParam(name = "image") MultipartFile image,
+                          @RequestParam(name = "price") double price,
+                          @RequestParam(name = "content") String content) {
+
+    try {
+        Product post = productService.findProduct(id);
+        post.setName(name);
+        post.setAuthor(author);
+        post.setContent(content);
+        post.setPrice(price);
+        if (!image.isEmpty()) {
+            String fileName = fileService.saveFile(image, postsImagesPath);
+            post.setImage(fileName);
+        }
+        Product savePost = productService.savePost(post);
+        if (savePost != null) {
+            return "redirect:?/";
+        } else {
+            return "redirect:/?error";
+        }
+
+    } catch (IOException e) {
+        System.out.println(e);
+        return "redirect:/?error";
+    }
+}
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ARTIST')")
     @PostMapping("/addpost")
     public String addProducts(@RequestParam(name = "name") String name,
                               @RequestParam(name = "author") String author,
@@ -63,10 +104,11 @@ public class ArtistController {
                 String fileName = fileService.saveFile(image, postsImagesPath);
                 post.setImage(fileName);
             }
-            productService.savePost(post);
+            productService.addPost(post);
             return "redirect:/";
         } catch (IOException e) {
             return "redirect:/error?error";
         }
     }
+
 }

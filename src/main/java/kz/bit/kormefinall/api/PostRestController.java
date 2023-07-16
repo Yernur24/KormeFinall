@@ -1,6 +1,7 @@
 package kz.bit.kormefinall.api;
 
 import kz.bit.kormefinall.dto.ProductDTO;
+import kz.bit.kormefinall.models.Product;
 import kz.bit.kormefinall.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ public class PostRestController {
     public List<ProductDTO> postList(){
         return productService.getPosts();
     }
+
 
     @GetMapping(value = "{id}")
     public ProductDTO getPosts (@PathVariable(name = "id") Long id){

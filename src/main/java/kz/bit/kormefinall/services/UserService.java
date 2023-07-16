@@ -34,13 +34,13 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User Not found");
         }
-        if (user.isActive()) {// if user is banned throw exception
+        if (user.isActive()) {
             throw new UsernameNotFoundException("User is banned");
         }
         return user;
     }
 
-    public User saveUser(User user) {   // save user method using for update user
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
@@ -75,24 +75,26 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-
-//    public UserDTO getUserByUsernameDTO(String username) { // get user by username dto mapper method
-//        return userMapper.toUserDTO(userRepository.findByUsername(username));
-//    }
-
     public List<UserDTO> userListDTO() { // get all users list dto mapper method for admin panel
         return userMapper.toUserDTOList(userRepository.findAll().stream().toList());
     }
+
     public UserDTO getUser(Long id){
         return userMapper.toUserDTO(userRepository.findById(id).orElse(new User()));
     }
 
 
-
-    public void Ban(Long id, boolean banned) { //  ban or unban user by id method for admin panel
+    public void Ban(Long id, boolean banned) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             user.setActive(banned);
+            userRepository.save(user);
+        }
+    }
+    public void unBan(Long id, boolean unbanned) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setActive(unbanned);
             userRepository.save(user);
         }
     }
