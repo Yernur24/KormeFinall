@@ -44,6 +44,10 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     public User addUser(User user) {
         User checkUser = userRepository.findByEmail(user.getEmail());
         if (checkUser == null) {

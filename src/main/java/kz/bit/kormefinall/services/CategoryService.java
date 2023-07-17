@@ -25,13 +25,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-//    public Category getCategoryById(Long id) {
-//        return categoryRepository.findById(id).orElse(null);
-//    }
-
     public List<CategoryDTO> getCategories(){
         return categoryMapper.toDtoList(categoryRepository.findAll());
     }
+
     public CategoryDTO getCategory(Long id){
         return categoryMapper.toDto(categoryRepository.findById(id).orElse(new Category()));
     }

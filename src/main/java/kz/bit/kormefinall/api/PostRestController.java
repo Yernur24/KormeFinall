@@ -1,7 +1,6 @@
 package kz.bit.kormefinall.api;
 
 import kz.bit.kormefinall.dto.ProductDTO;
-import kz.bit.kormefinall.models.Product;
 import kz.bit.kormefinall.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

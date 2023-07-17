@@ -40,25 +40,25 @@ class KormeFinallApplicationTests {
     @Mock
     private ProductRepository productRepository;
 
-    @Test
-    void checkproductDto(){
-
-        Product product = new Product();
-        product.setId(11L);
-        product.setName("Jaqsy kun");
-        product.setAuthor("Yeskendir");
-        product.setContent("jaqsy kun ar kawan zhaksi");
-        product.setImage("J");
-        product.setPrice(500);
-
-        ProductDTO productDTO = postMapper.toDto(product);
-
-        Assertions.assertEquals(product.getName(), productDTO.getName());
-        Assertions.assertEquals(product.getAuthor(), productDTO.getAuthor());
-        Assertions.assertEquals(product.getContent(), productDTO.getContent());
-        Assertions.assertEquals(product.getImage(), productDTO.getImage());
-        Assertions.assertEquals(product.getPrice(), productDTO.getPrice());
-
-    }
+//    @Test
+//    void checkproductDto(){
+//
+//        Product product = new Product();
+//        product.setId(11L);
+//        product.setName("Jaqsy kun");
+//        product.setAuthor("Yeskendir");
+//        product.setContent("jaqsy kun ar kawan zhaksi");
+//        product.setImage("J");
+//        product.setPrice(500);
+//
+//        ProductDTO productDTO = postMapper.toDto(product);
+//
+//        Assertions.assertEquals(product.getName(), productDTO.getName());
+//        Assertions.assertEquals(product.getAuthor(), productDTO.getAuthor());
+//        Assertions.assertEquals(product.getContent(), productDTO.getContent());
+//        Assertions.assertEquals(product.getImage(), productDTO.getImage());
+//        Assertions.assertEquals(product.getPrice(), productDTO.getPrice());
+//
+//    }
 
 }

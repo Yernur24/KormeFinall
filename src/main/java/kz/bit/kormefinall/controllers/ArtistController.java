@@ -47,12 +47,6 @@ public class ArtistController {
     }
 
 
-//    @PostMapping("/update")
-//    public String updatePost( Product product){
-//        productService.savePost(product);
-//        return "redirect:/";
-//    }
-    //@PreAuthorize("hasAnyRole('ROLE_ARTIST')")
 @PostMapping("/update")
 public String update(@RequestParam(name = "name") String name,
                           @RequestParam(name = "author") String author,

@@ -41,67 +41,118 @@
         </div>
     </aside>
     <main class="main-content border-radius-lg ">
-    <h1 style="margin-left: 50px; margin-top: 20px"> USERS PAGE! </h1>
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">Name</th>
-            <th scope="col">email</th>
-            <th scope="col">UnBan</th>
-            <th scope="col">ban</th>
-        </tr>
-        </thead>
-        <tbody id="userListBody">
-        </tbody>
-    </table>
+        <h1 style="margin-left: 50px; margin-top: 20px"> USERS PAGE! </h1>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Name</th>
+                <th scope="col">email</th>
+                <th scope="col">UnBan</th>
+                <th scope="col">ban</th>
+                <th scope="col">Roles</th>
+            </tr>
+            </thead>
+            <tbody id="userListBody">
+            </tbody>
+        </table>
 
-    <script type="text/javascript">
-        loadUsers();
-        function loadUsers() {
-            const httpRequest = new XMLHttpRequest();
-            httpRequest.open("GET", "/api/users", true);
-            httpRequest.onreadystatechange = function () {
-                if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                    let userList = JSON.parse(httpRequest.responseText);
-                    let tableContent = "";
-                    for (let i = 0; i < userList.length; i++) {
-                        // let btn = userList[i].banned ?
-                        //     "<button class='btn btn-success btn-sm' onclick='unbanUser(" + userList[i].id + ", true)'>Unban</button>" :
-                        //     "<button class='btn btn-danger btn-sm' onclick='banUser(" + userList[i].id + ", true)'>Ban</button>";
-                        tableContent += "<tr>";
-                        tableContent += "<td>" + userList[i].id + "</td>";
-                        tableContent += "<td>" + userList[i].title + "</td>";
-                        tableContent += "<td>" + userList[i].email + "</td>";
-                        tableContent += "<td><button class='btn btn-primary btn-sm' onClick='unbanUser(" + userList[i].id + ", false)'>Unban</button> </td>";
-                        tableContent += "<td> <button class='btn btn-danger btn-sm' onClick='banUser(" + userList[i].id + ", true)'>Ban</button></td>";
-                        tableContent += "</tr>";
-                    }
-                    document.getElementById("userListBody").innerHTML = tableContent;
-                }
-            }
-            httpRequest.send();
-        }
-    function banUser(userId, banned) {
-        console.log(userId, banned);
-        const url = "/api/users/ban";
-        const data = {user_id: userId, banned: banned};
-        $.post(url, data, function (data) {
-            console.log(data);
+        <script type="text/javascript">
             loadUsers();
-        })
-    }
-        function unbanUser(userId, banned) {
-            console.log(userId, banned);
-            const url = "/api/users/unban";
-            const data = {user_id: userId, banned: banned};
-            $.post(url, data, function (data) {
-                console.log(data);
-                loadUsers();
-            })
-        }
+            function loadUsers() {
+                const httpRequest = new XMLHttpRequest();
+                httpRequest.open("GET", "/api/users", true);
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+                        let userList = JSON.parse(httpRequest.responseText);
+                        let tableContent = "";
+                        for (let i = 0; i < userList.length; i++) {
+                            // let btn = userList[i].banned ?
+                            //     "<button class='btn btn-success btn-sm' onclick='unbanUser(" + userList[i].id + ", true)'>Unban</button>" :
+                            //     "<button class='btn btn-danger btn-sm' onclick='banUser(" + userList[i].id + ", true)'>Ban</button>";
+                            tableContent += "<tr>";
+                            tableContent += "<td>" + userList[i].id + "</td>";
+                            tableContent += "<td>" + userList[i].title + "</td>";
+                            tableContent += "<td>" + userList[i].email + "</td>";
+                            tableContent += "<td><button class='btn btn-primary btn-sm' onClick='unbanUser(" + userList[i].id + ", false)'>Unban</button> </td>";
+                            tableContent += "<td> <button class='btn btn-danger btn-sm' onClick='banUser(" + userList[i].id + ", true)'>Ban</button></td>";
+                            tableContent += "<td><button class='btn btn-light btn-sm' onclick='openDetailsModal("+userList[i].id+")'>DETAILS</button></td>";
+                            tableContent += "</tr>";
+                        }
+                        document.getElementById("userListBody").innerHTML = tableContent;
+                    }
+                }
+                httpRequest.send();
+            }
+            function banUser(userId, banned) {
+                console.log(userId, banned);
+                const url = "/api/users/ban";
+                const data = {user_id: userId, banned: banned};
+                $.post(url, data, function (data) {
+                    console.log(data);
+                    loadUsers();
+                })
+            }
+            function unbanUser(userId, banned) {
+                console.log(userId, banned);
+                const url = "/api/users/unban";
+                const data = {user_id: userId, banned: banned};
+                $.post(url, data, function (data) {
+                    console.log(data);
+                    loadUsers();
+                })
+            }
 
-</script>
+            function openDetailsModal(id){
+                detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                const httpRequest = new XMLHttpRequest();
+                httpRequest.open("GET", "/api/users/"+id, true);
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+                        let result = JSON.parse(httpRequest.responseText);
+                        userId.value = result.id;
+                        detailsModal.show();
+                    }
+                }
+                httpRequest.send();
+            }
+
+        </script>
+        <div class="modal fade" id="detailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form onsubmit="event.preventDefault();">
+                        <label for="userId">User ID:</label>
+                        <input type="text" id="userId" name="userId" required><br><br>
+
+                        <label for="newRole">New Role:</label>
+                        <input type="text" id="newRole" name="newRole" required><br><br>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <input type="submit" value="Change Role" onclick="changeUserRole(userId.value, newRole.value);">
+                    </form>
+                </div>
+            </div>
+            <script>
+                function changeUserRole(userId, newRole) {
+                    $.ajax({
+                        url: '/users/' + userId + '/changeRole',
+                        type: 'POST',
+                        data: { newRole: newRole },
+                        success: function(response) {
+                            console.log('Role change successful');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error occurred:', error);
+                        }
+                    });
+                }
+            </script>
+        </div>
     </main>
 </div>
+
 </html>

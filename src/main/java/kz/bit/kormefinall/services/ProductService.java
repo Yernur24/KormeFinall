@@ -48,7 +48,6 @@ public class ProductService {
     public  void deleteProduct(Long id){
         productRepository.deleteById(id);
     }
-//    public List<ProductDTO> searchPostsByName(String name) {return productRepository.findByNameContainingIgnoreCase(name);}
     public Product findProduct(Long id){
         return  productRepository.findById(id).orElse(null);
     }

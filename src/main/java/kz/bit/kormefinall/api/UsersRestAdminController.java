@@ -1,6 +1,7 @@
 package kz.bit.kormefinall.api;
 
 import kz.bit.kormefinall.dto.UserDTO;
+import kz.bit.kormefinall.models.User;
 import kz.bit.kormefinall.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,10 @@ public class UsersRestAdminController {
         userService.unBan(id, unbanned);
         return ResponseEntity.ok("User unbanned");
     }
-
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        return userService.findById(id);
+    }
 
 
     @GetMapping
